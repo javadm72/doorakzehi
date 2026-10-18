@@ -1,0 +1,557 @@
+/* =========================================================
+   ADMIN — با تم شجره‌نامه هماهنگ
+   ========================================================= */
+
+/* ---------- دکمه ادمین در topbar ---------- */
+.admin-btn{
+  border:0; background:transparent;
+  font-size:22px; padding:6px 12px;
+  border-radius:10px; cursor:pointer;
+  color:var(--topButton,#000);
+  transition:background .2s, transform .2s;
+  font-family:inherit;
+}
+.admin-btn:hover{ 
+  background:rgba(0,0,0,0.08); 
+  transform:scale(1.1); 
+}
+.admin-btn.active{
+  background:linear-gradient(135deg,
+    var(--buttonColor,#f88d00),
+    color-mix(in srgb, var(--buttonColor,#f88d00) 70%, #000));
+  color:#fff;
+  box-shadow:0 3px 12px -3px color-mix(in srgb, var(--buttonColor,#f88d00) 60%, transparent);
+  transition: 0.5s all;
+}
+.admin-btn.active:hover{
+  background:linear-gradient(135deg,
+    var(--buttonHoverColor,#f88d00),
+    color-mix(in srgb, var(--buttonHoverColor,#f88d00) 70%, #000));
+}
+
+/* ---------- Modal پایه ---------- */
+.admin-modal{
+  position:fixed; inset:0; z-index:300;
+  background:rgba(0,0,0,0.55);
+  backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px);
+  display:flex; align-items:center; justify-content:center;
+  padding:20px;
+  animation:adminModalIn .25s ease;
+}
+.admin-modal[hidden]{ display:none; }
+@keyframes adminModalIn{ from{opacity:0} to{opacity:1} }
+
+.admin-box{
+  width:100%; max-width:440px;
+  background:var(--cardBack,#fff);
+  border-radius:20px; padding:26px;
+  box-shadow:0 25px 70px -15px rgba(0,0,0,0.5),
+             0 0 0 1px color-mix(in srgb, var(--buttonColor,#f88d00) 25%, transparent);
+  animation:adminBoxIn .3s cubic-bezier(.2,.9,.3,1.4);
+  max-height:92vh; 
+  overflow-y:auto;
+  color:var(--text,#222);
+  font-family:inherit;
+}
+@keyframes adminBoxIn{
+  from{opacity:0; transform:translateY(20px) scale(.95)}
+  to  {opacity:1; transform:translateY(0) scale(1)}
+}
+.admin-box-lg{ max-width:920px; padding:0; }
+.admin-box-profile{ 
+  max-width:780px; 
+  padding:0; 
+  max-height:92vh; 
+
+  overflow-y:scroll; }
+
+/* ---------- Login ---------- */
+.admin-login-title{
+  font-size:20px; 
+  font-weight:800; 
+  color:var(--jadSpace,#222);
+  margin:0 0 6px; 
+  text-align:center;
+}
+.admin-login-sub{
+  font-size:13px; color:color-mix(in srgb, var(--text) 65%, transparent);
+  text-align:center; margin:0 0 20px; line-height:1.7;
+}
+.admin-input{
+  width:100%; padding:13px 16px;
+  border:2px solid color-mix(in srgb, var(--buttonColor,#f88d00) 30%, transparent);
+  border-radius:12px; font-size:15px;
+  background:color-mix(in srgb, var(--cardBack) 96%, var(--buttonColor) 4%);
+  color:var(--text); outline:none;
+  transition:border-color .2s, box-shadow .2s; font-family:inherit;
+}
+.admin-input:focus{
+  border-color:var(--buttonColor,#f88d00);
+  box-shadow:0 0 0 4px color-mix(in srgb, var(--buttonColor,#f88d00) 20%, transparent);
+}
+.admin-actions{ display:flex; gap:10px; margin-top:16px; }
+
+.admin-btn-primary, .admin-btn-secondary{
+  flex:1; padding:12px; 
+  border:0; 
+  border-radius:12px;
+  font-weight:700;
+   font-size:14px; cursor:pointer;
+  transition:transform .15s, box-shadow .2s; 
+  font-family:inherit;
+ 
+}
+.admin-btn-primary{
+  background:linear-gradient(135deg,
+    var(--buttonColor,#f88d00),
+    color-mix(in srgb, var(--buttonColor,#f88d00) 70%, #000));
+  color:#fff;
+  box-shadow:0 4px 14px -4px color-mix(in srgb, var(--buttonColor,#f88d00) 60%, transparent);
+}
+.admin-btn-primary:hover{
+  background: linear-gradient(135deg,
+  var(--buttonHoverColor,#d97000),
+  color-mix(in srgb,var(--buttonHoverColor,#d97000)70%,#000));
+  transform: translateY(-2px);
+  box-shadow:0 8px 20px -6px color-mix(in srgb, var(--buttonHoverColor,#d97000) 70%, transparent);
+}
+.admin-btn-secondary{
+  background: var(--otherButtonColor);
+  color:var(--otherColor);
+  transition: 0.5s all;
+}
+.admin-btn-secondary:hover{ 
+    background: var(--otherButtonHoverColor);
+    color:var(--otherColor);
+  transition: 0.5s all;
+
+
+}
+.admin-error{ color:#d12b2b; font-size:13px; text-align:center; margin-top:12px; min-height:18px; font-weight:600; }
+
+/* ---------- Panel Header ---------- */
+.admin-panel-header{
+  padding:20px 24px;
+  border-bottom:1px solid color-mix(in srgb, var(--buttonColor,#f88d00) 20%, transparent);
+  display:flex; align-items:center; justify-content:space-between; gap:12px;
+  background:linear-gradient(135deg,
+    color-mix(in srgb, var(--buttonColor,#f88d00) 10%, transparent),
+    transparent);
+  border-radius:20px 20px 0 0;
+}
+.admin-panel-title{
+  font-size:18px; font-weight:800; 
+  color:var(--jadSpace,#222); margin:0;
+  display:flex; align-items:center; gap:8px;
+}
+.admin-panel-title::before{ content:"⚙"; font-size:20px; color:var(--buttonColor,#f88d00); }
+.admin-panel-close{
+  border:0; background:transparent; font-size:28px;
+  color:var(--text,#666); cursor:pointer; line-height:1;
+  padding:0 8px; transition:color .2s, transform .2s;
+}
+.admin-panel-close:hover{ color:#d12b2b; transform:rotate(90deg); }
+
+/* ---------- Tabs ---------- */
+.admin-tabs{
+  display:flex; gap:4px; padding:12px 24px 0;
+  border-bottom:1px solid color-mix(in srgb, var(--buttonColor,#f88d00) 15%, transparent);
+  overflow-x:auto; scrollbar-width:none;
+}
+.admin-tabs::-webkit-scrollbar{ display:none; }
+.admin-tab{
+  border:0; background:transparent;
+  padding:10px 16px; font-size:13.5px; font-weight:700;
+  color:color-mix(in srgb, var(--text,#333) 55%, transparent);
+  cursor:pointer; border-radius:10px 10px 0 0;
+  transition:all .2s; font-family:inherit; white-space:nowrap;
+}
+.admin-tab:hover{
+  color:var(--text,#333);
+  background:color-mix(in srgb, var(--buttonColor,#f88d00) 8%, transparent);
+}
+.admin-tab.active{
+  color:var(--buttonColor,#f88d00);
+  background:color-mix(in srgb, var(--buttonColor,#f88d00) 12%, transparent);
+  box-shadow:inset 0 -3px 0 var(--buttonColor,#f88d00);
+}
+.admin-tab-body{ padding:20px 24px; max-height:65vh; overflow-y:auto; }
+.admin-tab-content[hidden]{ display:none; }
+
+/* ---------- Toolbar ---------- */
+.admin-toolbar{
+  display:flex; gap:8px; margin-bottom:14px;
+  flex-wrap:wrap; align-items:center;
+}
+.admin-search{
+  flex:1; min-width:200px; padding:10px 14px;
+  border:1.5px solid color-mix(in srgb, var(--buttonColor,#f88d00) 25%, transparent);
+  border-radius:10px; font-size:13.5px;
+  background:var(--cardBack); color:var(--text);
+  outline:none; font-family:inherit;
+  transition:border-color .2s, box-shadow .2s;
+}
+.admin-search:focus{
+  border-color:var(--buttonColor,#f88d00);
+  box-shadow:0 0 0 3px color-mix(in srgb, var(--buttonColor,#f88d00) 20%, transparent);
+}
+.admin-btn-sm{
+  border:0; padding:10px 16px; border-radius:10px;
+  font-size:13px; font-weight:700; cursor:pointer;
+  font-family:inherit; white-space:nowrap;
+  background:linear-gradient(135deg,
+    var(--buttonColor,#f88d00),
+    color-mix(in srgb, var(--buttonColor,#f88d00) 70%, #000));
+  color:#fff;
+  box-shadow:0 3px 10px -3px color-mix(in srgb, var(--buttonColor,#f88d00) 60%, transparent);
+  transition: 0.5s all;
+  transition:transform .35s, box-shadow .2s;
+
+}
+.admin-btn-sm:hover{
+  background: linear-gradient(135deg,
+  var(--buttonHoverColor,#d97000),
+  color-mix(in srgb,var(--buttonHoverColor,#d97000)70%,#000));
+  transform: translateY(-1px);
+  box-shadow:0 6px 16px -4px color-mix(in srgb, var(--buttonHoverColor,#d97000) 70%, transparent);
+}
+
+/* ---------- Person List ---------- */
+.admin-person-list{ display:flex; flex-direction:column; gap:8px; }
+.admin-person-row{
+  display:flex; align-items:center; gap:12px;
+  padding:12px 14px;
+  background:linear-gradient(135deg,
+    color-mix(in srgb, var(--buttonColor,#f88d00) 4%, var(--cardBack)),
+    var(--cardBack));
+  border:1.5px solid color-mix(in srgb, var(--buttonColor,#f88d00) 15%, transparent);
+  border-radius:12px; 
+  transition:all .2s;
+}
+.admin-person-row:hover{
+  border-color:var(--buttonColor,#f88d00);
+  transform:translateX(-2px);
+  box-shadow:0 4px 14px -6px color-mix(in srgb, var(--buttonColor,#f88d00) 50%, transparent);
+}
+.admin-person-row-avatar{
+  width:42px; height:42px; border-radius:50%;
+  color:#fff; display:flex; align-items:center; justify-content:center;
+  font-weight:800; font-size:16px; flex-shrink:0; overflow:hidden;
+}
+.admin-person-row-avatar.male{
+  background:linear-gradient(135deg, var(--male,#39a9bd), color-mix(in srgb, var(--male,#39a9bd) 70%, #000));
+}
+.admin-person-row-avatar.female{
+  background:linear-gradient(135deg, var(--female,#e4939a), color-mix(in srgb, var(--female,#e4939a) 70%, #000));
+}
+.admin-person-row-avatar img{ width:100%; height:100%; object-fit:cover; }
+.admin-person-row-info{ flex:1; min-width:0; }
+.admin-person-row-name{
+  font-size:14px; font-weight:700; 
+  color:var(--text,#1d1d1d);
+  margin-bottom:3px; display:flex; align-items:center; gap:6px; flex-wrap:wrap;
+}
+.admin-person-row-meta{
+  font-size:11.5px;
+  color:color-mix(in srgb, var(--buttonHoverColor,#333) 65%, transparent);
+}
+.admin-key-badge{
+  display:inline-flex; align-items:center;
+  padding:1px 8px; border-radius:6px;
+  background:linear-gradient(135deg,
+    var(--buttonColor,#f88d00),
+    color-mix(in srgb, var(--buttonColor,#f88d00) 60%, #000));
+  color:#fff; font-size:9.5px; font-weight:800; letter-spacing:.3px;
+}
+.admin-person-row-actions{ display:flex; gap:4px; flex-shrink:0; }
+.admin-row-btn{
+  width:32px; 
+  height:32px; 
+  border:0; 
+  border-radius:8px;
+  background:color-mix(in srgb, var(--buttonColor,#f88d00) 15%, transparent);
+  color:var(--buttonColor,#f88d00); 
+  font-size:14px; 
+  cursor:pointer;
+  display:flex; align-items:center; justify-content:center;
+  transition:all .18s;
+}
+.admin-row-btn:hover{ 
+  background:var(--buttonHoverColor,#f88d00); 
+  color:#fff; 
+  transform:scale(1.1); 
+}
+.admin-row-btn.danger{ 
+  background:rgba(210,43,43,0.12); 
+  color:#d12b2b; 
+  transition: 0.5s all;
+}
+.admin-row-btn.danger:hover{ 
+  background:#d12b2b; 
+  color:#fff; 
+}
+
+/* ---------- Profile Header ---------- */
+.admin-profile-header{
+  display:flex; align-items:center; gap:16px;
+  padding:20px 24px;
+  background:linear-gradient(135deg,
+    color-mix(in srgb, var(--buttonColor,#f88d00) 14%, var(--cardBack)),
+    var(--cardBack));
+  border-bottom:1px solid color-mix(in srgb, var(--buttonColor,#f88d00) 20%, transparent);
+}
+.admin-avatar-preview{
+  width:72px; height:72px; border-radius:50%;
+  border:3px solid var(--cardBack);
+  box-shadow:0 4px 16px -4px color-mix(in srgb, var(--buttonColor,#f88d00) 50%, transparent),
+             0 0 0 2px color-mix(in srgb, var(--buttonColor,#f88d00) 40%, transparent);
+  overflow:hidden; display:flex; align-items:center; justify-content:center;
+  background:linear-gradient(135deg,
+    color-mix(in srgb, var(--buttonColor,#f88d00) 20%, var(--cardBack)),
+    var(--cardBack));
+  flex-shrink:0;
+}
+.admin-avatar-preview img{ width:100%; height:100%; object-fit:cover; display:none; }
+.admin-avatar-placeholder{
+  font-size:34px; display:flex; align-items:center; justify-content:center;
+  color:var(--buttonColor,#f88d00); opacity:.6;
+}
+.admin-profile-head-info{ flex:1; min-width:0; }
+.admin-profile-head-info h3{
+  margin:0 0 4px; font-size:17px; font-weight:800;
+  color:var(--text,#1d1d1d);
+  overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
+  
+}
+.admin-profile-head-info p{
+  margin:0; font-size:12px;
+  color:color-mix(in srgb, var(--jadSpace,#333) 60%, transparent);
+}
+
+/* ---------- Form Sections ---------- */
+.admin-edit-form{ padding:0; }
+.admin-form-section{
+  padding:18px 24px;
+  border-bottom:1px solid color-mix(in srgb, var(--text,#333) 8%, transparent);
+}
+.admin-section-title{
+  font-size:13px; font-weight:800;
+  color:var(--buttonColor,#f88d00);
+  margin:0 0 14px;
+  display:flex; align-items:center; gap:6px;
+  letter-spacing:-.2px;
+}
+.admin-form-grid{
+  display:grid; grid-template-columns:1fr 1fr; gap:12px;
+}
+.admin-field{ 
+  display:flex; 
+  flex-direction:column;
+   gap:6px; }
+.admin-field.full{ grid-column:1 / -1; }
+.admin-field label{
+  font-size:12px; 
+  font-weight:700; 
+    color:color-mix(in srgb, var(--text,#747474) 55%, transparent);
+
+}
+.admin-field input,
+.admin-field select,
+.admin-field textarea{
+  padding:10px 12px;
+  border:1.5px solid color-mix(in srgb, var(--buttonColor,#f88d00) 25%, transparent);
+  border-radius:10px; font-size:13.5px;
+  font-family:inherit; outline:none;
+  background:var(--cardBack); color:var(--text);
+  transition:border-color .2s, box-shadow .2s; width:100%;
+  color:color-mix(in srgb, var(--text,#f88d00) 60%, #a09898);
+
+}
+.admin-field input:focus,
+.admin-field select:focus,
+.admin-field textarea:focus{
+  border-color:var(--buttonColor,#f88d00);
+  color:var(--buttonHoverColor);
+  box-shadow:0 0 0 3px color-mix(in srgb, var(--buttonColor,#f88d00) 20%, transparent);
+}
+.admin-field textarea{ resize:vertical; min-height:60px; }
+.admin-field-hint{
+  font-size:11px;
+  color:color-mix(in srgb, var(--text,#333) 55%, transparent);
+  line-height:1.6;
+}
+
+/* ---------- Gallery ---------- */
+.admin-gallery-grid{
+  display:grid; grid-template-columns:repeat(auto-fill, minmax(90px, 1fr));
+  gap:10px; margin-bottom:12px;
+}
+.admin-gallery-item{
+  position:relative; aspect-ratio:1; border-radius:10px; overflow:hidden;
+  border:2px solid color-mix(in srgb, var(--buttonColor,#f88d00) 30%, transparent);
+  background:color-mix(in srgb, var(--buttonColor,#f88d00) 5%, transparent);
+}
+.admin-gallery-item img{
+  width:100%; height:100%; object-fit:cover; display:block;
+}
+.admin-gallery-remove{
+  position:absolute; top:4px; right:4px;
+  width:22px; height:22px; border-radius:50%;
+  background:rgba(210,43,43,0.9); color:#fff; border:0;
+  font-size:14px; line-height:1; cursor:pointer;
+  display:flex; align-items:center; justify-content:center;
+  transition:transform .15s;
+}
+.admin-gallery-remove:hover{ transform:scale(1.15); background:#d12b2b; }
+.admin-gallery-empty{
+  text-align:center; padding:20px; font-size:12px;
+  color:color-mix(in srgb, var(--text,#333) 55%, transparent);
+  border:2px dashed color-mix(in srgb, var(--buttonColor,#f88d00) 25%, transparent);
+  border-radius:12px; margin-bottom:12px;
+}
+.admin-gallery-add{ display:flex; gap:8px; }
+.admin-gallery-add input{
+  flex:1; padding:10px 12px;
+  border:1.5px solid color-mix(in srgb, var(--buttonColor,#f88d00) 25%, transparent);
+  border-radius:10px; font-size:13px;
+  background:var(--cardBack); color:var(--text);
+  outline:none; font-family:inherit;
+}
+.admin-gallery-add input:focus{
+  border-color:var(--buttonColor,#f88d00);
+  box-shadow:0 0 0 3px color-mix(in srgb, var(--buttonColor,#f88d00) 20%, transparent);
+}
+
+/* ---------- Footer ---------- */
+.admin-form-footer{
+  padding:18px 24px;
+  display:flex; gap:10px;
+  background:color-mix(in srgb, var(--text,#333) 4%, transparent);
+  border-radius:0 0 20px 20px;
+}
+.admin-form-footer .admin-btn-primary,
+.admin-form-footer .admin-btn-secondary{ flex:1; }
+
+/* ---------- Toast ---------- */
+.admin-toast{
+  position:fixed; bottom:30px; left:50%;
+  transform:translateX(-50%) translateY(80px);
+  padding:12px 22px; border-radius:12px;
+  font-weight:700; font-size:13.5px; color:#fff;
+  z-index:400; opacity:0;
+  transition:all .35s cubic-bezier(.2,.9,.3,1.4);
+  box-shadow:0 12px 30px -8px rgba(0,0,0,0.4);
+  pointer-events:none; font-family:inherit;
+}
+.admin-toast.show{ opacity:1; transform:translateX(-50%) translateY(0); }
+.admin-toast.success{ background:linear-gradient(135deg,#2ecc71,#1a8c4a); }
+.admin-toast.error{ background:linear-gradient(135deg,#e74c3c,#a01a10); }
+.admin-toast.info{
+  background:linear-gradient(135deg,
+    var(--buttonColor,#f88d00),
+    color-mix(in srgb, var(--buttonColor,#f88d00) 60%, #000));
+}
+
+/* ---------- Info Box ---------- */
+.admin-info-box{
+  padding:14px 16px;
+  background:linear-gradient(135deg,
+    color-mix(in srgb, var(--buttonColor,#f88d00) 10%, transparent),
+    transparent);
+  border:1.5px dashed color-mix(in srgb, var(--buttonColor,#f88d00) 40%, transparent);
+  border-radius:12px;
+  font-size:12.5px; line-height:1.8;
+  color:var(--text); margin-bottom:16px;
+}
+.admin-info-box b{ color:var(--buttonColor,#f88d00); }
+
+/* ---------- Mobile ---------- */
+@media (max-width:700px){
+  .admin-form-grid{ grid-template-columns:1fr; }
+  .admin-tab-body{ padding:16px; }
+  .admin-panel-header{ padding:16px 18px; }
+  .admin-box{ padding:20px; }
+  .admin-box-lg, .admin-box-profile{ padding:0; }
+  .admin-profile-header{ padding:16px; gap:12px; }
+  .admin-avatar-preview{ width:60px; height:60px; }
+  .admin-avatar-placeholder{ font-size:28px; }
+  .admin-form-section{ padding:14px 16px; }
+  .admin-form-footer{ padding:14px 16px; flex-direction:column-reverse; }
+}
+
+
+
+/* =========================================================
+   بَج چندشاخه
+   ========================================================= */
+.admin-multi-badge{
+  display:inline-flex;
+  align-items:center;
+  gap:4px;
+  padding:2px 9px;
+  border-radius:999px;
+  background:linear-gradient(135deg,#6366f1,#4f46e5);
+  color:#fff;
+  font-size:9.5px;
+  font-weight:800;
+  letter-spacing:.2px;
+  box-shadow:0 2px 8px -2px rgba(99,102,241,0.55);
+  white-space:nowrap;
+}
+
+/* ردیف چندشاخه با حاشیه متفاوت */
+.admin-person-row.is-multi{
+  border-color:color-mix(in srgb, #6366f1 35%, transparent);
+  background:linear-gradient(135deg,
+    color-mix(in srgb, #6366f1 6%, var(--cardBack)),
+    var(--cardBack));
+}
+.admin-person-row.is-multi:hover{
+  border-color:#6366f1;
+  box-shadow:0 10px 28px -14px rgba(99,102,241,0.6);
+}
+
+/* =========================================================
+   فیلتر (All / Multi / Single)
+   ========================================================= */
+.admin-filter-select{
+  padding:11px 14px;
+  border:1.5px solid color-mix(in srgb, var(--buttonColor, #f88d00) 25%, transparent);
+  border-radius:11px;
+  font-size:13px;
+  font-weight:700;
+  font-family:inherit;
+  background:var(--cardBack);
+  color:var(--textDW);
+  cursor:pointer;
+  outline:none;
+  transition:border-color .2s, box-shadow .2s;
+}
+.admin-filter-select:focus{
+  border-color:var(--buttonColor, #f88d00);
+  box-shadow:0 0 0 3px color-mix(in srgb, var(--buttonColor, #f88d00) 20%, transparent);
+}
+
+/* =========================================================
+   Info Box چندشاخه در فرم
+   ========================================================= */
+.admin-multi-info{
+  margin:14px 14px 0;
+  padding:12px 16px;
+  background:linear-gradient(135deg,
+    rgba(99,102,241,0.12),
+    rgba(99,102,241,0.04));
+  border:1.5px solid rgba(99,102,241,0.35);
+  border-radius:14px;
+  font-size:12.5px;
+  line-height:1.8;
+  color:#3730a3;
+  font-weight:600;
+}
+.admin-multi-info b{
+  color:#4f46e5;
+  font-weight:800;
+}
+.admin-multi-info[hidden]{ 
+  display:none; 
+}

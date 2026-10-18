@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#ffffff">
+<title>شجره نامه نوشیروان‌زهی</title>
+
+<!-- استایل‌ها -->
+<link rel="stylesheet" href="theme.css">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="admin.css">
+<link rel="stylesheet" href="album.css">
+<link rel="stylesheet" href="stats.css">
+<link rel="stylesheet" href="filters.css">
+
+
+
+
+</head>
+<body>
+  <div class="title">شجره نامه خانوادگی طایفه درک زهی</div>
+
+<div id="ancestry-bar"></div>
+
+<header class="topbar">
+
+  <div class="tree-title">شجره نامه خانوادگی طایفه درک زهی</div>
+
+  <!-- ⭐ دکمه‌های ابزار جدید -->
+  <button id="statsBtn" class="tool-btn" type="button" title="آمار">📊</button>
+  <button id="pathBtn" class="tool-btn" type="button" title="مسیر ارتباط">🔗</button>
+  <button id="albumBtn" class="tool-btn" type="button" title="آلبوم">📸</button>
+  <button id="printBtn" class="tool-btn" type="button" title="چاپ">🖨</button>
+
+  <button id="adminBtn" class="admin-btn" type="button" title="پنل مدیریت">🔒</button>
+</header>
+
+<section class="searchbar">
+  <div class="search-box">
+    <span class="search-symbol">⌕</span>
+    <input id="searchInput" type="search" placeholder="...یه نفر پیدا کن" autocomplete="off">
+    <div id="searchResults" class="search-results" hidden></div>
+  </div>
+  <button id="advSearchBtn" class="small-control" type="button" title="جستجوی پیشرفته">🔎</button>
+
+</section>
+
+<main class="tree-viewport" id="treeViewport">
+  <div class="tree-canvas" id="treeCanvas">
+    <svg id="connectorLayer" class="connector-layer" aria-hidden="true"></svg>
+    <div class="tree-root" id="treeRoot"></div>
+  </div>
+</main>
+
+<div class="tree-tools">
+  <button id="zoomOutBtn" type="button">−</button>
+  <span id="zoomLabel">100%</span>
+  <button id="zoomInBtn" type="button">+</button>
+  <button id="resetViewBtn" type="button" aria-label="بازنشانی">⌂</button>
+  <button id="installBtn" type="button" hidden>⇩</button>
+</div>
+
+<aside class="person-drawer" id="personDrawer" aria-hidden="true">
+  <div class="drawer-head">
+    <button id="drawerClose" class="drawer-close" type="button">×</button>
+  </div>
+  <div id="drawerBody" class="drawer-body"></div>
+</aside>
+<div id="drawerBackdrop" class="drawer-backdrop" hidden></div>
+
+<!-- مودال‌های جانبی -->
+<div class="gallery-modal" id="galleryModal" hidden>
+  <div class="gallery-content">
+    <div class="gallery-header">
+      <span id="galleryTitle">گالری</span>
+      <button id="galleryClose" type="button">✕</button>
+    </div>
+    <div class="gallery-grid" id="galleryGrid"></div>
+  </div>
+</div>
+
+<div class="gallery-viewer" id="galleryViewer" hidden>
+  <button class="gallery-viewer-close" id="galleryViewerClose" type="button">×</button>
+  <img id="galleryViewerImg" src="" alt="">
+</div>
+
+<div class="photo-lightbox" id="photoLightbox" hidden>
+  <button class="photo-lightbox-close" id="photoLightboxClose" type="button">✕</button>
+  <img id="photoLightboxImg" src="" alt="">
+</div>
+
+<!-- Theme Manager -->
+<div class="theme-bar" id="themeBar">
+  <div id="themeSwatches" style="display:flex;gap:7px;align-items:center"></div>
+  <button type="button" class="theme-circle theme-custom-open" id="customThemeBtn" title="تم سفارشی">✎</button>
+</div>
+
+<div class="theme-custom-panel" id="customThemePanel" hidden>
+  <div class="theme-custom-header">
+    <span>🎨 تم سفارشی</span>
+    <button id="customThemeClose">×</button>
+  </div>
+  <div class="theme-custom-body">
+    <label>رنگ تاکید<input type="color" id="tc-accent" value="#f88d00"></label>
+    <label>پس‌زمینه<input type="color" id="tc-back" value="#5c3d17"></label>
+    <label>پس‌زمینه درخت<input type="color" id="tc-treeBg" value="#e9d7a9"></label>
+    <label>آبی مرد<input type="color" id="tc-male" value="#39a9bd"></label>
+    <label>صورتی زن<input type="color" id="tc-female" value="#e4939a"></label>
+    <label>خطوط درخت<input type="color" id="tc-line" value="#030303"></label>
+    <label>کارت<input type="color" id="tc-card" value="#ffffff"></label>
+    <label>متن<input type="color" id="tc-text" value="#333333"></label>
+  </div>
+  <div class="theme-custom-actions">
+    <button id="customThemeReset" class="secondary">بازنشانی</button>
+    <button id="customThemeSave">ذخیره</button>
+  </div>
+</div>
+
+<!-- ⭐ اسکریپت‌ها به ترتیب -->
+<script src="data.js"></script>
+<script src="tree.js"></script>
+<script src="admin.js"></script>
+<script src="album.js"></script>
+<script src="stats.js"></script>
+
+</body>
+</html>

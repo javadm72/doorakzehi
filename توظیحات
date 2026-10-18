@@ -1,0 +1,172 @@
+راهنمای گالری و اتصال دو شاخه
+
+۱) گالری تصاویر
+
+کجا اضافه کنم؟
+
+فقط کافیست به آبجکت شخص، فیلد gallery را اضافه کنی و آدرس عکس‌ها را داخلش بگذاری:
+
+```js
+{name:"صمد", deceased:true, deathYear:"1405/6",
+  gallery:[
+    "https://example.com/photos/samad-1.jpg",
+    "https://example.com/photos/samad-2.jpg",
+    "https://example.com/photos/samad-3.jpg"
+  ],
+  spouse:{name:"مدینه",gender:"f",hiatZ:true},
+  children:[
+    {name:"محمود",hiatZ:true},
+    // ...
+  ]
+}
+```
+
+کجا نمایش داده می‌شود؟
+
+وقتی روی کارت «صمد» کلیک کنی، پنل جزئیات (drawer) باز می‌شود. زیر بخش «حقایق» یک بخش جدید به نام «گالری تصاویر» ظاهر می‌شود که یک دکمه دارد: «مشاهده ۳ تصویر». با کلیک روی دکمه:
+
+1. یک پنجره‌ی پاپ‌آپ باز می‌شود که همه‌ی تصاویر را به شکل گرید نشان می‌دهد.
+2. با کلیک روی هر تصویر → همان عکس در حالت تمام‌صفحه باز می‌شود.
+3. دکمه‌ی ✕ یا کلیک روی پس‌زمینه → بستن.
+
+مثال کامل با عکس پروفایل + گالری
+
+```js
+{name:"رحیمداد", deceased:true,
+  photo:"https://example.com/rahimdad-profile.jpg",   // عکس پروفایل
+  gallery:[                                            // گالری
+    "https://example.com/gallery/rahimdad-1.jpg",
+    "https://example.com/gallery/rahimdad-2.jpg"
+  ],
+  spouse:{name:"نامعلوم",gender:"f",deceased:true},
+  children:[ /* ... */ ]
+}
+```
+
+· photo → در بالای پنل، کنار نام (آواتار گرد)
+· gallery → بخش پایین پنل، با دکمه‌ی «مشاهده N تصویر»
+
+اگر gallery خالی یا نباشد → بخش گالری اصلاً نمایش داده نمی‌شود.
+
+---
+
+۲) نوشتن یک شخص در دو شاخه
+
+برای این کار از فیلد key استفاده می‌کنی. هر دو نسخه‌ی همان شخص باید key یکسان داشته باشند. حالا در هر شاخه که باشی، روی کارت شخص یک دکمه‌ی نارنجی ⇆ ظاهر می‌شود که به شاخه‌ی دیگر می‌رود.
+
+نمونه: «ظاهر» و «طاهره» که از دو خانواده‌ی متفاوت هستند
+
+فرض کن طاهره دختر خانواده‌ی لوطکی است و ظاهر پسر خانواده‌ی براهویی. این دو با هم ازدواج کردند و در شجره‌نامه هم از طرف پدرِ طاهره (بسی) و هم از طرف مادرِ ظاهر (زینب) دیده می‌شوند.
+
+در شاخه‌ی بسی (از طرف زن):
+
+```js
+{name:"بسی", gender:"f", hiatZ:true, place:"کرت آباد",
+  spouse:{name:"عیسی", family:"لوطکی", hiatZ:true, place:"کرت آباد"},
+  children:[
+    {name:"ناصر", family:"لوطکی", deceased:true, place:"کرت آباد"},
+    // ...
+
+    // ⬇⬇⬇ طاهره اینجا با key="taher" ثبت شده
+    {name:"طاهره", gender:"f", family:"لوطکی", hiatZ:true, place:"زاهدان",
+      key:"taher",
+      spouse:{name:"ظاهر", family:"براهویی", hiatZ:true, place:"زاهدان",
+              key:"zaher"},
+      children:[
+        {name:"اسماء", gender:"f", family:"براهویی", hiatZ:true, place:"زاهدان"},
+        {name:"ساینا", gender:"f", family:"براهویی", hiatZ:true, place:"زاهدان"}
+      ]},
+
+    {name:"شهناز", gender:"f", family:"لوطکی", hiatZ:true, place:"کرت آباد"}
+  ]
+}
+```
+
+در شاخه‌ی زینب (از طرف مرد):
+
+```js
+{name:"زینب", gender:"f", hiatZ:true,
+  spouse:{name:"نامشخص", gender:"m", hiatZ:true},
+  children:[
+    {name:"مجید", hiatZ:true},
+
+    // ⬇⬇⬇ ظاهر اینجا با همان key="zaher" ثبت شده
+    {name:"ظاهر", family:"براهویی", hiatZ:true, place:"ارزنچه علیا",
+      key:"zaher",
+      spouse:{name:"طاهره", gender:"f", family:"لوطکی", hiatZ:true, place:"زاهدان",
+              key:"taher"},
+      children:[
+        {name:"اسماء", gender:"f", family:"براهویی", hiatZ:true, place:"زاهدان"},
+        {name:"ساینا", gender:"f", family:"براهویی", hiatZ:true, place:"زاهدان"}
+      ]},
+
+    {name:"نازی", gender:"f", hiatZ:true, place:"ارزنچه علیا",
+      spouse:{name:"نامشخص", gender:"m", hiatZ:true, place:"ارزنچه علیا"},
+      children:[
+        {name:"معین", hiatZ:true, place:"زاهدان"},
+        {name:"داوود", hiatZ:true, place:"زاهدان"},
+        {name:"سوده", gender:"f", hiatZ:true, place:"زاهدان"}
+      ]},
+    {name:"مدینه", gender:"f", hiatZ:true}
+  ]
+}
+```
+
+نتیجه‌ی این کار
+
+کاری که می‌کنی اتفاقی که می‌افتد
+روی کارت «طاهره» در شاخه‌ی لوطکی یک دکمه‌ی ⇆ بالا-چپ کارت ظاهر می‌شود
+کلیک روی ⇆ درخت تا شاخه‌ی براهویی باز می‌شود، «طاهره» آنجا هایلایت و اسکرول می‌شود و پنل باز می‌شود
+نوار سلسله‌مراتب برای طاهره/ظاهر نشان می‌دهد: «عضو در هر دو شاخه»
+
+---
+
+۳) نکات مهم
+
+هر دو نسخه باید فیلدهای کلیدی یکسان داشته باشند
+
+· key یکسان (الزامی)
+· name یکسان
+· gender یکسان
+· family, place, photo, gallery بهتر است یکسان باشند (وگرنه در دو شاخه متفاوت دیده می‌شوند)
+
+فقط یک نفر key ندارد
+
+اگر یک نفر فقط در یک شاخه باشد، key نمی‌گذاری. دکمه‌ی ⇆ هم نمایش داده نمی‌شود.
+
+مثال ساده‌تر برای تست
+
+فرض کن می‌خواهی «علی» را هم در شاخه‌ی احمد و هم در شاخه‌ی کریم بنویسی:
+
+```js
+// شاخه‌ی احمد:
+{name:"احمد", deceased:true,
+  spouse:{name:"نامعلوم",gender:"f",deceased:true},
+  children:[
+    {name:"علی", hiatZ:true, key:"ali", place:"زاهدان",
+      spouse:{name:"زهرا",gender:"f",hiatZ:true},
+      children:[{name:"حسن",hiatZ:true}]}
+  ]
+}
+
+// شاخه‌ی کریم:
+{name:"کریم", hiatZ:true,
+  spouse:{name:"نامعلوم",gender:"f",hiatZ:true},
+  children:[
+    {name:"علی", hiatZ:true, key:"ali", place:"زاهدان",
+      spouse:{name:"زهرا",gender:"f",hiatZ:true},
+      children:[{name:"حسن",hiatZ:true}]}
+  ]
+}
+```
+
+حالا در هر شاخه روی کارت علی، دکمه‌ی ⇆ ظاهر می‌شود.
+
+---
+
+خلاصه‌ی فرمول
+
+```
+گالری:         gallery:[ "url1", "url2", ... ]
+شخص در دو شاخه: key:"یک-نام-یکتا" در هر دو نسخه
+```

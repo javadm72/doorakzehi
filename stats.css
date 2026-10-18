@@ -1,0 +1,297 @@
+/* =========================================================
+   STATS — آمار شجره‌نامه
+   ========================================================= */
+
+.stats-modal{
+  position:fixed; inset:0; z-index:320;
+  background:rgba(0,0,0,0.55);
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+  display:flex; align-items:center; justify-content:center;
+  padding:20px;
+  animation:adminModalIn .25s ease;
+}
+.stats-modal[hidden]{ display:none; }
+
+.stats-box{
+  width:100%;
+  max-width:760px;
+  max-height:90vh;
+  background:
+    linear-gradient(180deg,
+      color-mix(in srgb, var(--buttonColor, #f88d00) 3%, var(--cardBack)),
+      var(--cardBack));
+  border-radius:20px;
+  box-shadow:
+    0 24px 60px -15px rgba(0,0,0,0.5),
+    0 0 0 1px color-mix(in srgb, var(--buttonColor, #f88d00) 22%, transparent);
+  display:flex;
+  flex-direction:column;
+  overflow:hidden;
+  font-family:inherit;
+  color:var(--text);
+  animation:adminBoxIn .35s cubic-bezier(.2,.9,.3,1.3);
+}
+
+.stats-header{
+  padding:16px 22px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  background:linear-gradient(180deg,
+    color-mix(in srgb, var(--buttonColor, #f88d00) 8%, transparent),
+    transparent);
+  border-bottom:1px solid color-mix(in srgb, var(--buttonColor, #f88d00) 15%, transparent);
+  flex-shrink:0;
+}
+.stats-header h3{
+  margin:0;
+  font-size:17px;
+  font-weight:800;
+  color:var(--text);
+  letter-spacing:-.3px;
+}
+.stats-close{
+  width:36px; height:36px;
+  border:0;
+  background:color-mix(in srgb, var(--text) 8%, transparent);
+  color:var(--text);
+  font-size:22px;
+  border-radius:50%;
+  cursor:pointer;
+  display:flex; align-items:center; justify-content:center;
+  padding:0;
+  transition:all .25s cubic-bezier(.2,.9,.3,1.5);
+  font-family:inherit;
+  line-height:1;
+  background:var(--searchBack);
+  color:var(--text2);
+}
+.stats-close:hover{
+  background:#d12b2b;
+  color:#fff;
+  transform:rotate(90deg) scale(1.08);
+}
+
+.stats-body{
+  padding:22px;
+  overflow-y:auto;
+  scrollbar-width:thin;
+  scrollbar-color:color-mix(in srgb, var(--buttonColor, #f88d00) 45%, transparent) transparent;
+}
+.stats-body::-webkit-scrollbar{ width:8px; }
+.stats-body::-webkit-scrollbar-thumb{
+  background:color-mix(in srgb, var(--buttonColor, #f88d00) 45%, transparent);
+  border-radius:4px;
+}
+
+/* ---------- کارت‌های خلاصه ---------- */
+.stats-cards{
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(110px, 1fr));
+  gap:12px;
+  margin-bottom:24px;
+}
+.stat-card{
+  padding:18px 14px;
+  border-radius:14px;
+  text-align:center;
+  border:1px solid color-mix(in srgb, var(--buttonColor, #f88d00) 12%, transparent);
+  background:linear-gradient(135deg,
+    color-mix(in srgb, var(--buttonColor, #f88d00) 5%, var(--cardBack)),
+    var(--cardBack));
+  transition:transform .25s cubic-bezier(.2,.9,.3,1.3), box-shadow .25s;
+}
+.stat-card:hover{
+  transform:translateY(-3px);
+  box-shadow:0 12px 30px -12px color-mix(in srgb, var(--buttonColor, #f88d00) 50%, transparent);
+}
+.stat-card-icon{ font-size:24px; margin-bottom:6px; opacity:.9; }
+.stat-card-value{
+  font-size:26px;
+  font-weight:800;
+  color:var(--nameColor, #1d1d1d);
+  letter-spacing:-1px;
+  margin-bottom:4px;
+}
+.stat-card-label{
+  font-size:11.5px;
+  font-weight:600;
+  color:color-mix(in srgb, var(--text) 60%, transparent);
+}
+
+.stat-card.primary{ background:linear-gradient(135deg,
+  color-mix(in srgb, var(--buttonColor, #f88d00) 12%, var(--cardBack)),
+  var(--cardBack)); }
+.stat-card.primary .stat-card-value{ color:var(--buttonColor, #f88d00); }
+
+.stat-card.male .stat-card-value{ color:#1e88e5; }
+.stat-card.female .stat-card-value{ color:#e91e63; }
+.stat-card.alive .stat-card-value{ color:#2ecc71; }
+.stat-card.deceased .stat-card-value{ color:#8c2d2d; }
+.stat-card.marriages .stat-card-value{ color:#a855f7; }
+
+/* ---------- بخش‌ها ---------- */
+.stats-section{
+  margin-bottom:22px;
+  padding:18px;
+  border-radius:14px;
+  background:linear-gradient(135deg,
+    color-mix(in srgb, var(--buttonColor, #f88d00) 4%, var(--cardBack)),
+    var(--cardBack));
+  border:1px solid color-mix(in srgb, var(--buttonColor, #f88d00) 12%, transparent);
+  color: var(--textDW);
+}
+.stats-section-title{
+  font-size:13.5px;
+  font-weight:800;
+  color:var(--text);
+  margin:0 0 14px;
+  padding-bottom:10px;
+  display:flex;
+  align-items:center;
+  gap:9px;
+  border-bottom:1px dashed color-mix(in srgb, var(--buttonColor, #f88d00) 20%, transparent);
+}
+.stats-section-title::before{
+  content:"";
+  width:4px; height:16px;
+  border-radius:2px;
+  background:linear-gradient(180deg,
+    var(--buttonColor, #f88d00),
+    color-mix(in srgb, var(--buttonColor, #f88d00) 40%, transparent));
+}
+
+/* ---------- محل‌ها ---------- */
+.stats-places{ display:flex; flex-direction:column; gap:10px; }
+.stats-place-item{
+  display:grid;
+  grid-template-columns:120px 1fr 40px;
+  gap:10px;
+  align-items:center;
+  font-size:12.5px;
+}
+.stats-place-name{
+  font-weight:700;
+  color:var(--text);
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+
+}
+.stats-place-bar-wrap{
+  height:10px;
+  background:color-mix(in srgb, var(--buttonColor, #f88d00) 10%, transparent);
+  border-radius:999px;
+  overflow:hidden;
+}
+.stats-place-bar{
+  height:100%;
+  background:linear-gradient(90deg,
+    var(--buttonColor, #f88d00),
+    color-mix(in srgb, var(--buttonColor, #f88d00) 60%, #000));
+  border-radius:999px;
+  transition:width 1s cubic-bezier(.2,.9,.3,1);
+}
+.stats-place-count{
+  font-weight:800;
+  color:var(--buttonColor, #f88d00);
+  text-align:center;
+}
+
+/* ---------- دهه‌ها ---------- */
+.stats-decades{
+  display:flex;
+  align-items:flex-end;
+  gap:8px;
+  height:170px;
+  padding:10px 0;
+  overflow-x:auto;
+  scrollbar-width:thin;
+}
+.stats-decade-item{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:8px;
+  min-width:44px;
+  flex-shrink:0;
+}
+.stats-decade-bar{
+  width:34px;
+  min-height:6px;
+  background:linear-gradient(180deg,
+    var(--buttonColor, #f88d00),
+    color-mix(in srgb, var(--buttonColor, #f88d00) 50%, transparent));
+  border-radius:8px 8px 0 0;
+  position:relative;
+  transition:height 1s cubic-bezier(.2,.9,.3,1);
+  display:flex;
+  align-items:flex-start;
+  justify-content:center;
+  padding-top:4px;
+}
+.stats-decade-count{
+  font-size:10px;
+  font-weight:800;
+  color:#fff;
+  text-shadow:0 1px 3px rgba(0,0,0,0.4);
+}
+.stats-decade-label{
+  font-size:10.5px;
+  font-weight:700;
+  color:color-mix(in srgb, var(--text) 65%, transparent);
+  writing-mode:horizontal-tb;
+}
+
+/* ---------- رکوردها ---------- */
+.stats-records{
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(200px, 1fr));
+  gap:12px;
+}
+.stats-record{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:12px 14px;
+  background:linear-gradient(135deg,
+    color-mix(in srgb, var(--buttonColor, #f88d00) 6%, transparent),
+    transparent);
+  border-radius:12px;
+  border:1px solid color-mix(in srgb, var(--buttonColor, #f88d00) 15%, transparent);
+}
+.stats-record-icon{
+  font-size:22px;
+  flex-shrink:0;
+}
+.stats-record-label{
+  font-size:11px;
+  font-weight:600;
+  color:color-mix(in srgb, var(--text) 60%, transparent);
+  margin-bottom:2px;
+}
+.stats-record-value{
+  font-size:13.5px;
+  font-weight:800;
+  color:var(--buttonColor);
+}
+
+.stats-empty{
+  text-align:center;
+  padding:20px;
+  font-size:12.5px;
+  color:color-mix(in srgb, var(--text) 55%, transparent);
+  font-weight:600;
+}
+
+@media (max-width:700px){
+  .stats-modal{ padding:10px; }
+  .stats-box{ border-radius:18px; max-height:94vh; }
+  .stats-body{ padding:16px; }
+  .stats-cards{ grid-template-columns:repeat(2, 1fr); gap:8px; }
+  .stat-card-value{ font-size:22px; }
+  .stats-section{ padding:14px; }
+  .stats-place-item{ grid-template-columns:90px 1fr 34px; font-size:11.5px; }
+}
